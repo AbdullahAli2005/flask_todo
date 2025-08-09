@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo App</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+</head>
+
+<body>
+  <div class="ui container" style="margin-top: 50px; max-width: 600px;">
+    <h1 class="ui center aligned teal header">
+      <i class="tasks icon"></i>
+      Todo App
+    </h1>
+
+    <form class="ui form segment" action="/add" method="POST">
+      <div class="field">
+        <label for="title">Add a New Task</label>
+        <input type="text" name="title" placeholder="Enter your task..." required />
+      </div>
+      <button class="ui blue fluid button" type="submit">
+        <i class="plus icon"></i> Add Task
+      </button>
+    </form>
+
+    <div class="ui divided relaxed list">
+      {% for todo in todo_list %}
+      <div class="ui segment">
+        <div class="ui grid">
+          <div class="twelve wide column">
+            <h4 class="ui header">
+              {{ todo.id }} | {{ todo.content }}
+              {% if todo.complete %}
+              <div class="ui green tiny label">Complete</div>
+              {% else %}
+              <div class="ui grey tiny label">Incomplete</div>
+              {% endif %}
+            </h4>
+          </div>
+          <div class="four wide column right aligned">
+            <a class="ui icon blue button" href="/update/{{ todo.id }}" title="Toggle Status">
+              <i class="refresh icon"></i>
+            </a>
+            <form action="/delete/{{ todo.id }}"  style="display:inline;">
+              <button class="ui icon red button" type="submit" title="Delete Task">
+                <i class="trash alternate icon"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+
+</html>
